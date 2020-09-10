@@ -9,11 +9,29 @@ window.addEventListener('load', ()=> {
         })
     }
     else {
-        h1.textContent = "Not working because have to enable geolocation!"
+        h1.textContent = "User denied geolocation!"
     }
 
 })
 
+const key = "8beb76c06f2491757377c3b5c38180b9";
+const KELVIN = 273;
+
+
+function getWeather(long, lat){
+    let api = `http://api.openweathermap.org/data/weather/2.5/weather?lat=${latitude}&long=${longitude}&appid=${key}`
+
+    fetch(api) .then(function(response){
+        let data = response.json();
+        return data;
+    })
+
+    .then(function(data){
+        weawther.temperature.value = Math.floor(data.main.temp - KELVIN);
+
+    })
+
+}
 
 
 
