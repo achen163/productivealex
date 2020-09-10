@@ -2,36 +2,39 @@ window.addEventListener('load', ()=> {
     let long;
     let lat;
 
+    let temperatureDegree = document.querySelector(".temperature-degree");
+    let locationTimezone = document.querySelector(".location-timezone");
+    let temperatureDescription = document.querySelector(".temperature-description");
+
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(position =>{
-            long = position.coords.longitude;
-            lat = position.coords.latitude;
-        })
+           long = position.coords.longitude;
+           lat = position.coords.latitude;
+           //GeoLocationPosition.coords.longitude
+           
+            const proxy = "https://cors-anywhere.herokuapp.com/";
+
+           const api = `${proxy}https://api.darksky.net/forecast/fd9d9c6418c23d94745b836767721ad1/${lat},${long}`;
+            
+           fetch(api)
+           .then(response =>{
+                   return response.json();
+           })
+           .then(data => {
+               console.log(data);
+               const {temperature, summary} = data.currently;
+                temperatureDegree.textContent = temperature;
+                locationTimezone.textContent = data.timezone;
+                temperatureDescription.textContent = summary;
+                
+           });
+                  
+        });
     }
-    else {
-        h1.textContent = "User denied geolocation!"
-    }
-
-})
-
-const key = "8beb76c06f2491757377c3b5c38180b9";
-const KELVIN = 273;
+    //else?
+});
 
 
-function getWeather(long, lat){
-    let api = `http://api.openweathermap.org/data/weather/2.5/weather?lat=${latitude}&long=${longitude}&appid=${key}`
-
-    fetch(api) .then(function(response){
-        let data = response.json();
-        return data;
-    })
-
-    .then(function(data){
-        weawther.temperature.value = Math.floor(data.main.temp - KELVIN);
-
-    })
-
-}
 
 
 

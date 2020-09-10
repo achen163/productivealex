@@ -35,18 +35,11 @@ body{
 }
 
 .location {
-    
+    font-size: .5rem;
     width: 50%;
     display: flex;
     align-items: left;
 
-}
-
-
-
-.location p{
-    padding-left: 10px;
-    padding-top: 20px;
 }
 
 
@@ -65,12 +58,17 @@ body{
 }
 
 .degree-section span{
-    margin: 10px;
+    margin: 1px;
     font-size: 35px;
 }
 
 .degree-section h2{
     font-size: 40px;
+}
+
+.temperature-description{
+    text-align: left;
+    
 }
 
 
