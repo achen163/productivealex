@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Plan for Today</title>
+</head>
+<body onload="realtimeClock()">
+    
+     <div class="temperature">
+        <div class="degree-section">
+            <h2 class="temperature-degree">
+                34
+            </h2>
+            <span> F</span>
+        </div>
+
+</div>
+<h1 class="temperature-description">
+    Cloudy
+</h1>
+    <div class="location">
+        <h1 class="location-timezone">
+            Location
+          
+        </h1> 
+        
+    </div>
+    
+ 
+
+ 
+
+
+    <div class="main-container">
+        <h1 id="landing">
+            What is your plan for the day? The time is currently:
+        </h1>
+        <div id="time">
+        </div>
+            <form>
+                <input type="text" class = "todo-input">
+                <button class="todo-button" type="submit">
+                    <i class="fas fa-plus-square"> </i>
+                </button>
+            </form>
+            <div class="todo-container">
+                <ul class="todo-list"></ul>
+                
+            </div>
+        </div>
+
+   
+    
+
+    
+    <script src="https://kit.fontawesome.com/ab500c62ad.js" crossorigin="anonymous"></script>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
