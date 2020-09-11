@@ -5,6 +5,10 @@ window.addEventListener('load', ()=> {
     let temperatureDegree = document.querySelector(".temperature-degree");
     let locationTimezone = document.querySelector(".location-timezone");
     let temperatureDescription = document.querySelector(".temperature-description");
+    let temperatureSection = document.querySelector(".temperature")
+    const temperatureSpan = document.querySelector(".temperature span")
+
+
 
     if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(position =>{
@@ -26,17 +30,125 @@ window.addEventListener('load', ()=> {
                 temperatureDegree.textContent = temperature;
                 locationTimezone.textContent = data.timezone;
                 temperatureDescription.textContent = summary;
-                
            });
-                  
         });
     }
     //else?
 });
 
+const todoInput = document.querySelector(".todo-input");
+const todoButton = document.querySelector(".todo-button");
+const todoList = document.querySelector(".todo-list");
+
+document.addEventListener('DOMContentLoaded', getTodos);
+todoButton.addEventListener('click', addTodo);
+todoList.addEventListener('click', deleteCheck);
 
 
+function addTodo(event){
+    //prevent form submit
+    event.preventDefault();
+    const todoDiv = document.createElement('div');
+    todoDiv.classList.add("todo");
+//make list
+    const newTodo = document.createElement('li');
+    newTodo.innerText = todoInput.value; //let input user input
+    newTodo.classList.add('todo-item');
+    todoDiv.appendChild(newTodo); //div with an li
+//add to local storage
+    saveLocalTodos(todoInput.value);
 
+//checkmark button
+    const completedButton = document.createElement('button');
+    completedButton.innerHTML = '<i class= "fas fa-check"> </i>';
+    completedButton.classList.add("complete-btn");
+    todoDiv.appendChild(completedButton);
+//trash button
+    const trashButton = document.createElement('button');
+    trashButton.innerHTML = '<i class= "fas fa-trash"> </i>';
+    trashButton.classList.add("trash-btn");
+    todoDiv.appendChild(trashButton);
+//append to list
+    todoList.appendChild(todoDiv);
+    //clear the value from pervious userinput
+    todoInput.value = "";
+}
+
+function deleteCheck(e){
+    const item = (e.target);
+    if (item.classList[0] === 'trash-btn'){
+        const todo = item.parentElement;
+        //falling animation
+        todo.classList.add('fall');
+        removeLocalTodos(todo);
+        todo.addEventListener('transitionend', function(){
+            todo.remove();
+
+        })
+    }
+
+    if (item.classList[0] === 'complete-btn'){
+        const todo = item.parentElement;
+        todo.classList.toggle("completed") ;
+    }
+}
+
+function saveLocalTodos(todo){
+    let todos;
+    if(localStorage.getItem('todos')=== null){
+        todos = [];
+
+    }else{
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+    todos.push(todo);
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+function getTodos() {
+    let todos;
+    if(localStorage.getItem('todos')=== null){
+        todos = [];
+
+    }else{
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+    todos.forEach(function(todo){
+        const todoDiv = document.createElement('div');
+        todoDiv.classList.add("todo");
+    //make list
+        const newTodo = document.createElement('li');
+        newTodo.innerText = todo; //let input user input
+        newTodo.classList.add('todo-item');
+        todoDiv.appendChild(newTodo); //div with an li
+    //checkmark button
+        const completedButton = document.createElement('button');
+        completedButton.innerHTML = '<i class= "fas fa-check"> </i>';
+        completedButton.classList.add("complete-btn");
+        todoDiv.appendChild(completedButton);
+    //trash button
+        const trashButton = document.createElement('button');
+        trashButton.innerHTML = '<i class= "fas fa-trash"> </i>';
+        trashButton.classList.add("trash-btn");
+        todoDiv.appendChild(trashButton);
+    //append to list
+        todoList.appendChild(todoDiv);
+    });
+}
+
+function removeLocalTodos(todo){
+    let todos;
+    if(localStorage.getItem('todos') === null){
+        todos = [];
+
+    }else{
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+    
+    const todoIndex = todo.children[0].innerText;
+    todos.splice(todos.indexOf(todoIndex), 1 );
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
 
 
 
